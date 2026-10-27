@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sweet Cake Bakery — Tiệm Bánh Kem Ngọt Ngào</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { width: 100%; height: 100%; overflow: hidden; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #fff1f2; }
+    iframe { width: 100%; height: 100%; border: none; display: block; }
+    .fallback { display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%; padding: 20px; text-align: center; }
+    .card { background: white; padding: 32px 40px; border-radius: 16px; box-shadow: 0 10px 30px rgba(190, 24, 93, 0.15); border: 1px solid #fecdd3; max-width: 500px; }
+    h1 { color: #be185d; margin-bottom: 12px; }
+    p { color: #5f3f4c; font-size: 15px; line-height: 1.6; margin-bottom: 20px; }
+    a.btn { display: inline-block; padding: 12px 28px; border-radius: 99px; background: #e11d48; color: white; text-decoration: none; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <iframe src="http://127.0.0.1:8787/" title="Sweet Cake Bakery">
+    <div class="fallback">
+      <div class="card">
+        <h1>🎂 Sweet Cake Bakery</h1>
+        <p>Website đang chạy tại cổng local. Nhấp vào nút bên dưới để mở:</p>
+        <a class="btn" href="http://localhost:8787/" target="_blank">Mở Website (localhost:8787)</a>
+      </div>
+    </div>
+  </iframe>
+</body>
+</html>
