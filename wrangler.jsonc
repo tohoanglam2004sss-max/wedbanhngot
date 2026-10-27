@@ -1,6 +1,6 @@
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
-	"name": "moc-cafe-ordering",
+	"name": "wedbanhngot",
 	"main": "src/index.ts",
 	"compatibility_date": "2026-10-19",
 	"assets": {
@@ -13,7 +13,7 @@
 	"d1_databases": [
 		{
 			"binding": "DB",
-			"database_name": "moc-cafe-db",
+			"database_name": "wedbanhngot",
 			"database_id": "78bbe91c-fee2-4d12-8c83-886bf78b9cc5",
 			"migrations_dir": "migrations"
 		}
