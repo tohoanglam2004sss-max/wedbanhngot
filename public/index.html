@@ -1,0 +1,473 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#fff1f2">
+    <meta name="description" content="Sweet Cake Bakery — Tiệm bánh kem sinh nhật, bento cake, bánh mousse, tiramisu tươi ngon mỗi ngày. Đặt bánh theo yêu cầu, giao tận nơi đúng giờ.">
+    <title>Sweet Cake Bakery — Tiệm Bánh Kem Ngọt Ngào & Tinh Tế</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/app.css">
+    <script src="/app.js" defer></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-container">
+        <a class="brand" href="/" aria-label="Sweet Cake Bakery, về trang chủ">
+          <span class="brand__mark" aria-hidden="true">🎂</span>
+          <span class="brand__name">Sweet Cake <small>Artisan Bakery</small></span>
+        </a>
+        <nav class="nav-links" aria-label="Điều hướng">
+          <a class="header-link" href="#menu">Thực đơn bánh</a>
+          <a class="header-link" href="#about">Về tiệm</a>
+          <a class="header-link" href="#contact">Liên hệ</a>
+          <a class="header-link header-link--admin" href="/admin.html">Quản trị</a>
+        </nav>
+        <div class="header-actions">
+          <button class="cart-button" id="open-cart" type="button" aria-label="Giỏ hàng, 0 món" aria-haspopup="dialog" aria-controls="cart-dialog">
+            <svg class="cart-button__icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path>
+              <line x1="3" y1="6" x2="21" y2="6"></line>
+              <path d="M16 10a4 4 0 0 1-8 0"></path>
+            </svg>
+            <span class="cart-button__label">Giỏ bánh</span>
+            <span class="cart-button__count" id="cart-count">0</span>
+            <span class="visually-hidden" id="cart-total">0₫</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- Hero Banner -->
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero__copy">
+          <p class="eyebrow"><span>✨</span> Bánh kem tươi làm thủ công mỗi ngày</p>
+          <h1 id="hero-title">Ngọt ngào từng khoảnh khắc,<br><em>trọn vẹn từng yêu thương.</em></h1>
+          <p class="hero__description">
+            Sử dụng 100% kem sữa tươi New Zealand & trái cây chọn lọc. Cốt bánh chiffon mềm mịn, ít ngọt, nhận ghi chữ và làm bánh theo sở thích riêng của bạn.
+          </p>
+          <div class="hero__actions">
+            <a class="button button--hero" href="#menu">Khám phá các mẫu bánh <span aria-hidden="true">↓</span></a>
+            <a class="button button--ghost" href="#custom-banner">Đặt bánh theo yêu cầu</a>
+          </div>
+        </div>
+        <div class="hero__art" aria-hidden="true">
+          <div class="hero__cake">
+            <div class="cake-tier cake-tier--top">
+              <div class="cake-flame"></div>
+              <div class="cake-candle"></div>
+              <div class="cake-berries">
+                <span>🍓</span><span>🍓</span><span>🍓</span>
+              </div>
+            </div>
+            <div class="cake-tier cake-tier--mid"></div>
+            <div class="cake-tier cake-tier--base"></div>
+            <div class="cake-stand"></div>
+          </div>
+          <span class="hero__badge">Fresh Daily<br>100% Butter</span>
+        </div>
+      </section>
+
+      <!-- Benefits / Cam kết -->
+      <section class="benefits" aria-label="Cam kết chất lượng">
+        <div class="benefit-item">
+          <span class="benefit-icon" aria-hidden="true">🍓</span>
+          <div>
+            <strong>Nguyên liệu cao cấp</strong>
+            <small>Bơ kem New Zealand, trái cây tươi tự nhiên</small>
+          </div>
+        </div>
+        <div class="benefit-item">
+          <span class="benefit-icon" aria-hidden="true">✍️</span>
+          <div>
+            <strong>Viết chữ & nến số miễn phí</strong>
+            <small>Ghi lời chúc ý nghĩa theo mong muốn</small>
+          </div>
+        </div>
+        <div class="benefit-item">
+          <span class="benefit-icon" aria-hidden="true">🛵</span>
+          <div>
+            <strong>Giao bánh hẹn giờ tận nơi</strong>
+            <small>Bảo quản hộp giữ nhiệt đá gel chu đáo</small>
+          </div>
+        </div>
+        <div class="benefit-item">
+          <span class="benefit-icon" aria-hidden="true">💖</span>
+          <div>
+            <strong>Ít ngọt thanh dịu</strong>
+            <small>Công thức giảm 30% đường, tốt cho sức khỏe</small>
+          </div>
+        </div>
+      </section>
+
+      <!-- Menu Section -->
+      <section class="menu-section" id="menu" aria-labelledby="menu-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Thế giới bánh ngọt Sweet Cake</p>
+            <h2 id="menu-title">Bộ sưu tập <em>bánh kem tươi</em></h2>
+          </div>
+          <span class="menu-count" id="menu-count">Đang tải bánh…</span>
+        </div>
+
+        <!-- Filter bar: Search, Sort, Tabs -->
+        <div class="toolbar">
+          <div class="search-box">
+            <span class="search-icon" aria-hidden="true">🔍</span>
+            <input class="search-input" id="search-input" type="search" placeholder="Tìm bánh sinh nhật, bento, mousse, tiramisu..." autocomplete="off">
+            <button class="search-clear" id="search-clear" type="button" aria-label="Xóa tìm kiếm" hidden>×</button>
+          </div>
+          <div class="sort-box">
+            <label for="sort-select" class="visually-hidden">Sắp xếp theo</label>
+            <select class="sort-select" id="sort-select">
+              <option value="default">Sắp xếp: Phổ biến nhất</option>
+              <option value="price_asc">Giá: Thấp đến Cao</option>
+              <option value="price_desc">Giá: Cao đến Thấp</option>
+              <option value="bestseller">Bán chạy nhất</option>
+              <option value="newest">Mới ra lò</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Quick Tag Tabs -->
+        <div class="quick-tabs" id="quick-tabs" role="tablist" aria-label="Bộ lọc nhanh">
+          <button class="tab-chip" type="button" data-tag="all" aria-pressed="true">Tất cả bánh</button>
+          <button class="tab-chip" type="button" data-tag="featured">⭐ Bánh nổi bật</button>
+          <button class="tab-chip" type="button" data-tag="bestseller">🔥 Bán chạy nhất</button>
+          <button class="tab-chip" type="button" data-tag="new">✨ Mới ra lò</button>
+        </div>
+
+        <!-- Category list -->
+        <div class="category-list" id="category-list" aria-label="Lọc theo danh mục">
+          <!-- Filled dynamically via JS -->
+        </div>
+
+        <p class="status-message" id="menu-status" role="status" aria-live="polite">Đang tải thực đơn bánh kem…</p>
+        
+        <!-- Product Grid -->
+        <div class="product-grid" id="product-grid"></div>
+      </section>
+
+      <!-- Custom Order Banner -->
+      <section class="custom-banner" id="custom-banner">
+        <div class="custom-banner__content">
+          <span class="eyebrow" style="color: #fda4af;">Dịch vụ đặc biệt</span>
+          <h2>Đặt bánh theo ý tưởng & thiết kế riêng</h2>
+          <p>Bạn muốn tạo bất ngờ cho người thương bằng mẫu bánh vẽ hình chân dung, bánh fondant 3D hoặc bánh tầng sự kiện sang trọng? Hãy chia sẻ ý tưởng với chúng tôi.</p>
+          <div class="custom-banner__buttons">
+            <a class="button button--white" href="#contact">Tư vấn ngay qua Zalo / Hotline</a>
+            <button class="button button--ghost-white" id="filter-custom-cakes" type="button">Xem mẫu bánh thiết kế riêng</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- About Section -->
+      <section class="about-section" id="about" aria-labelledby="about-title">
+        <div class="about-card">
+          <div class="about-text">
+            <p class="eyebrow">Câu chuyện của chúng tôi</p>
+            <h2 id="about-title">Sweet Cake Bakery — <em>Nơi tình yêu hóa ngọt ngào</em></h2>
+            <p>
+              Được thành lập với mong muốn mang lại những chiếc bánh kem không chỉ đẹp mắt mà còn thơm ngon, mềm xốp và trọn vẹn hương vị tự nhiên. Mỗi chiếc bánh ra lò là tác phẩm thủ công tỉ mỉ từ những người thợ làm bánh tận tâm.
+            </p>
+            <p>
+              Chúng tôi nói <strong>KHÔNG</strong> với chất bảo quản, phụ gia hóa học và hương liệu công nghiệp. Độ ngọt được cân chỉnh thanh mát, để bạn có thể thưởng thức trọn vẹn vị béo ngậy của kem sữa và vị chua ngọt tươi mát của trái cây bốn mùa.
+            </p>
+          </div>
+          <div class="about-stats">
+            <div class="stat-box"><strong>50.000+</strong><span>Bữa tiệc đã phục vụ</span></div>
+            <div class="stat-box"><strong>100%</strong><span>Kem sữa tươi New Zealand</span></div>
+            <div class="stat-box"><strong>4.9/5★</strong><span>Đánh giá hài lòng</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact Section -->
+      <section class="contact-section" id="contact" aria-labelledby="contact-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Ghé thăm tiệm hoặc liên hệ đặt bánh</p>
+            <h2 id="contact-title">Liên hệ <em>Sweet Cake</em></h2>
+          </div>
+        </div>
+        <div class="contact-grid">
+          <div class="contact-card">
+            <span class="contact-icon">📍</span>
+            <h3>Địa chỉ tiệm</h3>
+            <p>Số 123 Đường Hoa Hồng, Phường Bến Nghé, Quận 1, TP. Hồ Chí Minh</p>
+            <small>Có chỗ đỗ ô tô và xe máy thuận tiện</small>
+          </div>
+          <div class="contact-card">
+            <span class="contact-icon">📞</span>
+            <h3>Hotline & Zalo</h3>
+            <p><strong>0908 123 456</strong> (Tư vấn đặt bánh)</p>
+            <small>Hỗ trợ đặt bánh gấp trong 2 giờ</small>
+          </div>
+          <div class="contact-card">
+            <span class="contact-icon">⏰</span>
+            <h3>Giờ mở cửa</h3>
+            <p>Thứ 2 – Chủ Nhật: <strong>08:00 – 21:30</strong></p>
+            <small>Nhận giao hàng đến 22:00 mỗi ngày</small>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+      <div class="footer-container">
+        <div class="footer-col footer-col--brand">
+          <a class="brand brand--footer" href="/" aria-label="Sweet Cake Bakery">
+            <span class="brand__mark" aria-hidden="true">🎂</span>
+            <span class="brand__name">Sweet Cake <small>Artisan Bakery</small></span>
+          </a>
+          <p>Tiệm bánh kem tươi thủ công chất lượng cao, mang vị ngọt yêu thương đến mọi ngày kỷ niệm của bạn.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Danh mục nổi bật</h4>
+          <ul>
+            <li><a href="#menu" data-cat-link="banh-sinh-nhat">Bánh sinh nhật</a></li>
+            <li><a href="#menu" data-cat-link="banh-kem-mini">Bento cake mini</a></li>
+            <li><a href="#menu" data-cat-link="banh-mousse">Bánh Mousse tươi</a></li>
+            <li><a href="#menu" data-cat-link="banh-tiramisu">Bánh Tiramisu Ý</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Chính sách & Hỗ trợ</h4>
+          <ul>
+            <li>Giao hàng & Bảo quản bánh</li>
+            <li>Chính sách hoàn tiền nếu bánh hỏng</li>
+            <li>Ưu đãi khách hàng thân thiết</li>
+            <li><a href="/admin.html">Khu vực quản trị tiệm</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 Sweet Cake Bakery. Toàn bộ hình ảnh & công thức thuộc bản quyền tiệm.</span>
+        <span>Yêu thương trọn vẹn trong từng lát bánh ♡</span>
+      </div>
+    </footer>
+
+    <!-- Product Detail Dialog -->
+    <dialog class="sheet sheet--detail" id="detail-dialog" aria-labelledby="detail-title">
+      <div class="sheet__handle" aria-hidden="true"></div>
+      <div class="sheet__heading">
+        <p class="eyebrow" id="detail-category">Danh mục</p>
+        <button class="icon-button" type="button" data-close="detail-dialog" aria-label="Đóng chi tiết">×</button>
+      </div>
+      <div class="detail-body">
+        <div class="detail-media">
+          <img class="detail-img" id="detail-img" src="/images/cake-default.jpg" alt="Ảnh bánh kem">
+          <div class="detail-badges" id="detail-badges"></div>
+        </div>
+        <div class="detail-info">
+          <h2 class="detail-title" id="detail-title">Tên bánh</h2>
+          <div class="detail-price-row">
+            <span class="detail-price" id="detail-price">0₫</span>
+            <span class="detail-original-price" id="detail-original-price" hidden>0₫</span>
+            <span class="detail-stock" id="detail-stock">Còn 50 bánh</span>
+          </div>
+          <p class="detail-desc" id="detail-desc">Mô tả bánh</p>
+          
+          <div class="detail-customization">
+            <label class="field-label" for="detail-cake-message">
+              <span>✍️ Chữ viết lên bánh / Lời chúc</span>
+              <small>(Miễn phí, tối đa 200 ký tự)</small>
+            </label>
+            <input class="text-field" id="detail-cake-message" type="text" placeholder="Ví dụ: Happy Birthday My Love ♡" maxlength="200">
+          </div>
+
+          <div class="detail-action-row">
+            <div class="quantity-control quantity-control--lg">
+              <button id="detail-qty-minus" type="button" aria-label="Giảm số lượng">−</button>
+              <span id="detail-qty-value">1</span>
+              <button id="detail-qty-plus" type="button" aria-label="Tăng số lượng">+</button>
+            </div>
+            <button class="button button--primary button--add-detail" id="detail-add-btn" type="button">
+              <span>Thêm vào giỏ hàng • <strong id="detail-btn-total">0₫</strong></span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </dialog>
+
+    <!-- Cart Dialog -->
+    <dialog class="sheet" id="cart-dialog" aria-labelledby="cart-title">
+      <div class="sheet__handle" aria-hidden="true"></div>
+      <div class="sheet__heading">
+        <div>
+          <p class="eyebrow">Món ngon đang chờ</p>
+          <h2 id="cart-title">Giỏ bánh <em>của bạn</em></h2>
+        </div>
+        <button class="icon-button" type="button" data-close="cart-dialog" aria-label="Đóng giỏ hàng">×</button>
+      </div>
+      <div class="cart-items" id="cart-items"></div>
+      <div class="cart-summary">
+        <div>
+          <span>Tạm tính bánh</span>
+          <strong id="cart-subtotal">0₫</strong>
+        </div>
+        <p>Phí giao hàng và ưu đãi sẽ được tính ở bước tiếp theo.</p>
+      </div>
+      <button class="button button--primary button--wide" id="checkout-button" type="button" disabled>
+        <span>Tiến hành đặt bánh</span>
+        <span aria-hidden="true">→</span>
+      </button>
+    </dialog>
+
+    <!-- Checkout Dialog -->
+    <dialog class="sheet sheet--checkout" id="checkout-dialog" aria-labelledby="checkout-title">
+      <div class="sheet__handle" aria-hidden="true"></div>
+      <div class="sheet__heading">
+        <div>
+          <p class="eyebrow">Chỉ còn một bước nữa</p>
+          <h2 id="checkout-title">Thông tin <em>giao nhận bánh</em></h2>
+        </div>
+        <button class="icon-button" type="button" data-close="checkout-dialog" aria-label="Đóng đặt hàng">×</button>
+      </div>
+      
+      <form id="checkout-form">
+        <!-- Fulfillment choice -->
+        <fieldset class="fulfillment-options">
+          <legend>Phương thức nhận bánh</legend>
+          <label class="choice-card" id="delivery-choice">
+            <input type="radio" name="fulfillmentType" value="delivery" checked>
+            <span>
+              <strong id="delivery-choice-title">Giao tận nơi đúng hẹn</strong>
+              <small id="delivery-choice-help">Giao bằng hộp giữ nhiệt kèm túi đá gel</small>
+            </span>
+          </label>
+          <label class="choice-card">
+            <input type="radio" name="fulfillmentType" value="pickup">
+            <span>
+              <strong>Đến lấy trực tiếp tại tiệm</strong>
+              <small>Tiệm chuẩn bị sẵn và đóng gói chỉn chu cho bạn</small>
+            </span>
+          </label>
+        </fieldset>
+
+        <div class="form-row form-row--2">
+          <div>
+            <label class="field-label" for="customer-name">Tên người nhận <span class="required">*</span></label>
+            <input class="text-field" id="customer-name" name="customerName" autocomplete="name" minlength="2" maxlength="80" placeholder="Nguyễn Văn A" required>
+          </div>
+          <div>
+            <label class="field-label" for="customer-phone">Số điện thoại liên hệ <span class="required">*</span></label>
+            <input class="text-field" id="customer-phone" name="customerPhone" type="tel" inputmode="tel" autocomplete="tel" minlength="8" maxlength="20" placeholder="090 123 4567" required>
+          </div>
+        </div>
+
+        <!-- Date & Time picker for cake delivery -->
+        <div class="form-row form-row--2">
+          <div>
+            <label class="field-label" for="delivery-date">
+              <span>📅 Ngày nhận bánh</span> <span class="required">*</span>
+            </label>
+            <input class="text-field" id="delivery-date" name="deliveryDate" type="date" required>
+          </div>
+          <div>
+            <label class="field-label" for="delivery-time">
+              <span>⏰ Khung giờ nhận bánh</span> <span class="required">*</span>
+            </label>
+            <select class="text-field" id="delivery-time" name="deliveryTime" required>
+              <option value="09:00 - 11:00">09:00 – 11:00 (Sáng)</option>
+              <option value="11:00 - 13:00">11:00 – 13:00 (Trưa)</option>
+              <option value="14:00 - 16:00" selected>14:00 – 16:00 (Chiều)</option>
+              <option value="16:00 - 18:00">16:00 – 18:00 (Chiều tối)</option>
+              <option value="18:00 - 20:00">18:00 – 20:00 (Tối tiệc)</option>
+              <option value="20:00 - 21:30">20:00 – 21:30 (Đêm muộn)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Address group -->
+        <div id="address-group">
+          <label class="field-label" id="delivery-street-label" for="delivery-street">Địa chỉ giao bánh <span class="required">*</span></label>
+          <input class="text-field" id="delivery-street" name="deliveryStreet" autocomplete="address-line1" maxlength="180" placeholder="Số nhà, tên đường, tòa nhà hoặc chung cư">
+          
+          <div class="address-selects" id="ghn-address-selects">
+            <label>
+              <span class="field-label">Tỉnh / thành phố</span>
+              <select class="text-field" id="delivery-province" name="deliveryProvince"><option value="">Chọn tỉnh / thành</option></select>
+            </label>
+            <label>
+              <span class="field-label">Quận / huyện</span>
+              <select class="text-field" id="delivery-district" name="deliveryDistrict" disabled><option value="">Chọn quận / huyện</option></select>
+            </label>
+            <label>
+              <span class="field-label">Phường / xã</span>
+              <select class="text-field" id="delivery-ward" name="deliveryWard" disabled><option value="">Chọn phường / xã</option></select>
+            </label>
+          </div>
+          <p class="quote-message" id="shipping-quote" role="status" aria-live="polite">Phí giao hàng được tính theo địa chỉ nhận bánh.</p>
+        </div>
+
+        <!-- Notes -->
+        <label class="field-label" for="customer-note">Ghi chú giao hàng hoặc dặn dò tiệm</label>
+        <textarea class="text-field text-field--area" id="customer-note" name="customerNote" maxlength="500" placeholder="Ví dụ: Gọi trước khi giao 15 phút, lên tầng 5 chung cư, lấy thêm 1 vỉ nến xoắn..."></textarea>
+
+        <!-- Payment options -->
+        <fieldset class="payment-options">
+          <legend>Phương thức thanh toán</legend>
+          <label class="choice-card">
+            <input type="radio" name="paymentMethod" value="cash" checked>
+            <span>
+              <strong>Thanh toán khi nhận bánh (COD)</strong>
+              <small>Thanh toán tiền mặt cho shipper hoặc trả tại tiệm</small>
+            </span>
+          </label>
+          <label class="choice-card" id="bank-transfer-choice">
+            <input type="radio" name="paymentMethod" value="bank_transfer">
+            <span>
+              <strong>Chuyển khoản VietQR tiện lợi</strong>
+              <small id="bank-transfer-help">Quét mã QR tự động điền số tiền và nội dung chuyển khoản</small>
+            </span>
+          </label>
+          <label class="choice-card" id="vnpay-choice">
+            <input type="radio" name="paymentMethod" value="vnpay">
+            <span>
+              <strong>Thanh toán online qua cổng VNPay</strong>
+              <small>Thẻ ATM, Visa/Mastercard hoặc ứng dụng ngân hàng</small>
+            </span>
+          </label>
+        </fieldset>
+
+        <!-- Order Summary Confirmation -->
+        <div class="checkout-review">
+          <div class="review-row"><span>Tạm tính bánh:</span><strong id="review-subtotal">0₫</strong></div>
+          <div class="review-row"><span>Phí giao hàng:</span><span id="review-delivery">0₫</span></div>
+          <div class="checkout-total">
+            <span>Tổng thanh toán <small id="payment-summary">Thanh toán khi nhận bánh</small></span>
+            <strong id="checkout-total">0₫</strong>
+          </div>
+        </div>
+
+        <p class="form-error" id="checkout-error" role="alert" hidden></p>
+        
+        <button class="button button--primary button--wide" id="place-order" type="submit">
+          <span>Xác nhận đặt bánh ngay</span>
+          <span aria-hidden="true">→</span>
+        </button>
+      </form>
+
+      <!-- Success Screen -->
+      <div class="order-success" id="order-success" hidden>
+        <span class="success-mark" aria-hidden="true">🎉</span>
+        <h3>Sweet Cake đã nhận đơn của bạn!</h3>
+        <p>Mã đơn hàng: <strong class="badge-order-id" id="success-order-id">CAKE-XXXXXX</strong></p>
+        <p class="success-schedule" id="success-schedule">Hẹn giao: 14:00 – 16:00 ngày 28/10/2026</p>
+        <p class="success-total" id="success-total">Tổng thanh toán: 0₫</p>
+        
+        <div class="bank-transfer-instructions" id="bank-transfer-instructions" hidden></div>
+        
+        <p class="success-note">Nhân viên tiệm sẽ gọi điện hoặc nhắn tin Zalo cho bạn trong ít phút để xác nhận lại chi tiết chữ trên bánh và giờ giao nhé!</p>
+        <button class="button button--primary button--wide" type="button" data-close="checkout-dialog">Hoàn tất & Về thực đơn</button>
+      </div>
+    </dialog>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </body>
+</html>

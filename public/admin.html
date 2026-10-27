@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#fff1f2">
+    <title>Hệ thống Quản Trị — Sweet Cake Bakery</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/admin.css">
+    <script src="/admin.js" defer></script>
+  </head>
+  <body>
+    <header class="admin-header">
+      <div class="admin-header__brand">
+        <a class="brand" href="/" aria-label="Sweet Cake Bakery">
+          <span class="brand__mark">🎂</span>
+          <span class="brand__name">Sweet Cake <small>Admin Portal</small></span>
+        </a>
+      </div>
+      <nav class="admin-nav" id="admin-nav" hidden>
+        <button class="nav-tab active" id="tab-orders" type="button">📦 Quản lý Đơn Hàng</button>
+        <button class="nav-tab" id="tab-products" type="button">🎂 Quản lý Bánh Kem</button>
+      </nav>
+      <div class="admin-header__right">
+        <a class="view-store-link" href="/" target="_blank">Xem tiệm bánh ↗</a>
+        <button class="logout-button" id="logout" type="button" hidden>Đăng xuất</button>
+      </div>
+    </header>
+
+    <main class="admin-main">
+      <!-- Login Card -->
+      <section class="login-card" id="login-card" aria-labelledby="login-title">
+        <p class="eyebrow">Bảo mật hệ thống</p>
+        <h1 id="login-title">Đăng nhập <em>Quản Trị</em></h1>
+        <p>Nhập mã ADMIN_TOKEN được cấu hình trong Cloudflare Worker secrets hoặc file .dev.vars.</p>
+        <form id="login-form">
+          <label for="admin-token">Mã quản trị (Admin Token)</label>
+          <input id="admin-token" name="token" type="password" autocomplete="current-password" placeholder="Nhập token quản trị..." required>
+          <p class="admin-error" id="login-error" role="alert" hidden></p>
+          <button class="button button--primary" type="submit">Đăng nhập hệ thống <span>→</span></button>
+        </form>
+      </section>
+
+      <!-- Dashboard -->
+      <section class="dashboard" id="dashboard" hidden>
+        <!-- TAB 1: ORDERS -->
+        <div class="admin-tab-content" id="content-orders">
+          <div class="dashboard-heading">
+            <div>
+              <p class="eyebrow">Sweet Cake Bakery · Quản trị</p>
+              <h1>Đơn đặt bánh <em>gần đây</em></h1>
+              <p class="dashboard-subtitle">Theo dõi, chuẩn bị bánh và đối soát thanh toán.</p>
+            </div>
+            <button class="button button--quiet" id="refresh-orders" type="button">↻ <span>Làm mới đơn</span></button>
+          </div>
+
+          <section class="metrics" aria-label="Tổng quan đơn bánh">
+            <article class="metric-card">
+              <span class="metric-icon metric-icon--all" aria-hidden="true">🎂</span>
+              <div>
+                <span>Tổng đơn gần đây</span>
+                <strong id="metric-total">—</strong>
+              </div>
+            </article>
+            <article class="metric-card">
+              <span class="metric-icon metric-icon--new" aria-hidden="true">✳</span>
+              <div>
+                <span>Đơn mới / Chờ duyệt</span>
+                <strong id="metric-new">—</strong>
+              </div>
+            </article>
+            <article class="metric-card">
+              <span class="metric-icon metric-icon--pending" aria-hidden="true">⏰</span>
+              <div>
+                <span>Chờ thanh toán</span>
+                <strong id="metric-unpaid">—</strong>
+              </div>
+            </article>
+            <article class="metric-card">
+              <span class="metric-icon metric-icon--paid" aria-hidden="true">₫</span>
+              <div>
+                <span>Doanh thu đã thu</span>
+                <strong id="metric-paid">—</strong>
+              </div>
+            </article>
+          </section>
+
+          <div class="dashboard-toolbar">
+            <label class="search-field" for="order-search">
+              <span aria-hidden="true">🔍</span>
+              <input id="order-search" type="search" autocomplete="off" placeholder="Tìm mã đơn, tên khách, số điện thoại...">
+            </label>
+            <label class="filter-field" for="status-filter">
+              <span>Trạng thái đơn</span>
+              <select id="status-filter">
+                <option value="">Tất cả trạng thái</option>
+                <option value="new">Mới (Chờ duyệt)</option>
+                <option value="confirmed">Đã xác nhận</option>
+                <option value="preparing">Đang làm bánh</option>
+                <option value="shipping">Đang giao hàng</option>
+                <option value="ready">Sẵn sàng</option>
+                <option value="completed">Đã hoàn thành</option>
+                <option value="cancelled">Đã hủy</option>
+              </select>
+            </label>
+            <span class="result-count" id="result-count"></span>
+          </div>
+
+          <p class="admin-error" id="dashboard-error" role="alert" hidden></p>
+
+          <div class="orders-layout">
+            <section class="orders-panel" aria-label="Danh sách đơn hàng">
+              <div class="orders-panel__heading">
+                <strong>Danh sách đơn</strong>
+                <span id="orders-updated">Đang tải…</span>
+              </div>
+              <div class="orders-list" id="orders-list"></div>
+            </section>
+            <section class="order-detail" id="order-detail" aria-label="Chi tiết đơn hàng" aria-live="polite">
+              <div class="detail-empty">
+                <span>🎂</span>
+                <p>Chọn một đơn hàng để xem chi tiết bánh & thông tin khách.</p>
+              </div>
+            </section>
+          </div>
+        </div>
+
+        <!-- TAB 2: PRODUCTS -->
+        <div class="admin-tab-content" id="content-products" hidden>
+          <div class="dashboard-heading">
+            <div>
+              <p class="eyebrow">Thực đơn & Kho hàng</p>
+              <h1>Quản lý <em>Bánh Kem</em></h1>
+              <p class="dashboard-subtitle">Thêm mẫu bánh mới, chỉnh sửa giá bán, cập nhật tồn kho và tải ảnh lên Cloudflare R2.</p>
+            </div>
+            <button class="button button--primary" id="btn-add-product" type="button">+ <span>Thêm mẫu bánh mới</span></button>
+          </div>
+
+          <div class="dashboard-toolbar">
+            <label class="search-field" for="product-search">
+              <span aria-hidden="true">🔍</span>
+              <input id="product-search" type="search" autocomplete="off" placeholder="Tìm tên bánh hoặc mô tả...">
+            </label>
+            <label class="filter-field" for="product-cat-filter">
+              <span>Danh mục bánh</span>
+              <select id="product-cat-filter">
+                <option value="">Tất cả danh mục</option>
+                <option value="banh-sinh-nhat">Bánh sinh nhật</option>
+                <option value="banh-kem-mini">Bánh kem mini</option>
+                <option value="banh-mousse">Bánh mousse</option>
+                <option value="banh-tiramisu">Bánh tiramisu</option>
+                <option value="banh-theo-yeu-cau">Bánh theo yêu cầu</option>
+                <option value="phu-kien">Phụ kiện trang trí</option>
+              </select>
+            </label>
+            <button class="button button--quiet" id="refresh-products" type="button">↻ Làm mới</button>
+          </div>
+
+          <div class="products-table-wrap">
+            <table class="products-table">
+              <thead>
+                <tr>
+                  <th>Hình ảnh</th>
+                  <th>Tên bánh & ID</th>
+                  <th>Danh mục</th>
+                  <th>Giá bán</th>
+                  <th>Giá gốc</th>
+                  <th>Tồn kho</th>
+                  <th>Trạng thái</th>
+                  <th>Thao tác</th>
+                </tr>
+              </thead>
+              <tbody id="products-tbody">
+                <!-- Dynamic via JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Modal: Add / Edit Product -->
+    <dialog class="admin-modal" id="product-modal">
+      <div class="admin-modal__heading">
+        <h2 id="modal-product-title">Thêm mẫu bánh mới</h2>
+        <button class="icon-button" type="button" data-close-modal="product-modal">×</button>
+      </div>
+      <form id="product-form">
+        <input type="hidden" id="form-product-mode" value="create">
+        <div class="form-grid">
+          <div>
+            <label for="form-product-name">Tên bánh kem *</label>
+            <input class="admin-input" id="form-product-name" type="text" placeholder="Ví dụ: Bánh Mousse Dâu Tây" required>
+          </div>
+          <div>
+            <label for="form-product-id">Mã sản phẩm (ID không dấu, gạch ngang) *</label>
+            <input class="admin-input" id="form-product-id" type="text" placeholder="banh-mousse-dau-tay" required>
+          </div>
+          <div>
+            <label for="form-product-category">Danh mục *</label>
+            <select class="admin-input" id="form-product-category" required>
+              <option value="banh-sinh-nhat" data-label="Bánh sinh nhật">Bánh sinh nhật</option>
+              <option value="banh-kem-mini" data-label="Bánh kem mini">Bánh kem mini</option>
+              <option value="banh-mousse" data-label="Bánh mousse">Bánh mousse</option>
+              <option value="banh-tiramisu" data-label="Bánh tiramisu">Bánh tiramisu</option>
+              <option value="banh-theo-yeu-cau" data-label="Bánh theo yêu cầu">Bánh theo yêu cầu</option>
+              <option value="phu-kien" data-label="Phụ kiện trang trí">Phụ kiện trang trí</option>
+            </select>
+          </div>
+          <div>
+            <label for="form-product-price">Giá bán (VND) *</label>
+            <input class="admin-input" id="form-product-price" type="number" min="0" step="1000" placeholder="350000" required>
+          </div>
+          <div>
+            <label for="form-product-original-price">Giá gốc khuyến mãi (VND)</label>
+            <input class="admin-input" id="form-product-original-price" type="number" min="0" step="1000" placeholder="380000 (để trống nếu không giảm giá)">
+          </div>
+          <div>
+            <label for="form-product-stock">Số lượng tồn kho *</label>
+            <input class="admin-input" id="form-product-stock" type="number" min="0" value="50" required>
+          </div>
+          <div>
+            <label for="form-product-weight">Trọng lượng (gram)</label>
+            <input class="admin-input" id="form-product-weight" type="number" min="10" value="500">
+          </div>
+        </div>
+
+        <label for="form-product-desc">Mô tả chi tiết nguyên liệu, cốt bánh, hương vị *</label>
+        <textarea class="admin-input admin-input--area" id="form-product-desc" rows="3" placeholder="Mô tả chiếc bánh..." required></textarea>
+
+        <div class="checkbox-row">
+          <label><input id="form-product-available" type="checkbox" checked> <span>Đang mở bán</span></label>
+          <label><input id="form-product-featured" type="checkbox"> <span>⭐ Bánh nổi bật</span></label>
+          <label><input id="form-product-bestseller" type="checkbox"> <span>🔥 Bán chạy</span></label>
+          <label><input id="form-product-new" type="checkbox"> <span>✨ Bánh mới</span></label>
+        </div>
+
+        <p class="admin-error" id="product-form-error" hidden></p>
+        <div class="modal-actions">
+          <button class="button button--quiet" type="button" data-close-modal="product-modal">Hủy</button>
+          <button class="button button--primary" id="btn-save-product" type="submit">Lưu sản phẩm</button>
+        </div>
+      </form>
+    </dialog>
+
+    <!-- Modal: Image Upload to Cloudflare R2 -->
+    <dialog class="admin-modal" id="image-modal">
+      <div class="admin-modal__heading">
+        <h2>Tải ảnh lên Cloudflare R2</h2>
+        <button class="icon-button" type="button" data-close-modal="image-modal">×</button>
+      </div>
+      <form id="image-form">
+        <p>Tải ảnh thật của tiệm lưu trữ vĩnh viễn trên Cloudflare R2 cho sản phẩm: <strong id="upload-product-name">...</strong></p>
+        <div class="upload-zone">
+          <input type="file" id="image-file-input" accept="image/jpeg,image/png,image/webp" required>
+          <div class="upload-preview-wrap">
+            <img class="upload-preview" id="image-preview" src="/images/cake-default.svg" alt="Preview">
+          </div>
+          <small>Hỗ trợ JPEG, PNG, WebP (tối đa 5 MB). Ảnh sẽ tự động tối ưu hiển thị.</small>
+        </div>
+        <p class="admin-error" id="image-form-error" hidden></p>
+        <div class="modal-actions">
+          <button class="button button--quiet" type="button" data-close-modal="image-modal">Hủy</button>
+          <button class="button button--primary" id="btn-upload-image" type="submit">Tải lên R2 ngay</button>
+        </div>
+      </form>
+    </dialog>
+
+    <div class="admin-toast" id="admin-toast" role="status" aria-live="polite"></div>
+  </body>
+</html>
